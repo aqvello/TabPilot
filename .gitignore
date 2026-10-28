@@ -1,0 +1,13 @@
+bin/
+artifacts/*
+!artifacts/validation-summary.json
+.agents/
+.codex/
+.aws/
+.vs/
+.env
+.env.*
+!.env.example
+*.log
+*.tmp
+*.user

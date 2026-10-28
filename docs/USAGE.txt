@@ -1,0 +1,36 @@
+TabPilot v0.2.1 Preview
+
+Windows 10 1703+ x64 and .NET Framework 4.8 are required.
+Run TabPilot.exe and keep TabPilot.exe.config alongside it.
+
+Choose English from the "中文 / EN" button in the popup header or the
+"Language / 语言" tray menu.
+The choice applies immediately and is remembered after restarting.
+
+The default global shortcut is Ctrl+Alt+Space. If occupied, the app tries
+alternatives and displays the actual shortcut in the popup.
+Search by tab title. Click a result or use the arrow keys and Enter.
+Esc, the close button, or clicking outside hides the popup in the tray.
+Quit using the tray menu or Ctrl+Q inside the popup.
+Drag the top heading to move the popup; its position is remembered.
+
+F5 / Ctrl+R: refresh tabs.
+Ctrl+1 / Ctrl+2 / Ctrl+3: all tabs / by monitor / recent switches.
+Recent only records successful switches made through TabPilot.
+
+No Chrome extension, browser restart, debugging port, launch parameter
+or Chrome profile change is required.
+
+UI Automation may omit tabs, particularly in collapsed groups.
+Windows foreground restrictions or dialogs may prevent activation.
+The list is not guaranteed complete. See Details for diagnostics.
+
+Settings and diagnostics use a writable portable data folder, otherwise
+%LOCALAPPDATA%\TabPilot. Settings have backups and failed-write retries.
+Tab titles may appear in local diagnostics; review files before sharing.
+No automatic startup registration is added.
+
+Repository and documentation:
+https://github.com/aqvello/TabPilot
+
+License: MIT. See LICENSE included in this folder.

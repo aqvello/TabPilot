@@ -1,0 +1,14 @@
+{
+  "DemoContent": "fictional local pages",
+  "IsolatedBrowserProfile": true,
+  "TemporaryProfileDeleted": true,
+  "ExistingBrowserWindowsUnchanged": true,
+  "ThreeMonitorWorkflowVerified": true,
+  "SelectionVerified": true,
+  "ForegroundVerified": true,
+  "HighlightVerified": true,
+  "DemoWindowsClosed": true,
+  "Presentation": "illustrated monitor overview and focus zoom",
+  "Version": "0.2.1-preview",
+  "Language": "zh-CN"
+}

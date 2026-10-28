@@ -1,0 +1,12 @@
+{
+  "environment": {
+    "os": "Microsoft Windows NT 10.0.19045.0",
+    "chrome": "155.0.8059.85"
+  },
+  "three_monitor_mixed_scaling_tested": true,
+  "conclusion": "Passing controlled samples observed; Windows foreground activation may still fail.",
+  "limitations": [
+    "Enumeration completeness is unknown",
+    "Complex collapsed groups are not fully tested"
+  ]
+}
