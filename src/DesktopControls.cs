@@ -123,6 +123,12 @@ namespace TabPilot
     internal sealed class TabRows : ListBox
     {
         [DllImport("user32.dll")] static extern IntPtr SendMessage(IntPtr h, uint message, IntPtr w, IntPtr l);
+        [DllImport("user32.dll")] static extern bool InvalidateRect(IntPtr hwnd, ref PaintRect rect, bool erase);
+        [StructLayout(LayoutKind.Sequential)]
+        struct PaintRect
+        {
+            internal int Left, Top, Right, Bottom;
+        }
         internal float UiScale = 1;
         internal Font TitleFont, SmallFont;
         internal event Action<DesktopTab> ActivatedTab;
@@ -203,7 +209,10 @@ namespace TabPilot
         {
             if (!IsHandleCreated || index < 0 || index >= Items.Count) return;
             var bounds = Rectangle.Intersect(ClientRectangle, GetItemRectangle(index));
-            if (bounds.Width > 0 && bounds.Height > 0) Invalidate(bounds);
+            if (bounds.Width <= 0 || bounds.Height <= 0) return;
+            // The row paints its own background. Avoid erasing it before owner drawing.
+            var rect = new PaintRect { Left = bounds.Left, Top = bounds.Top, Right = bounds.Right, Bottom = bounds.Bottom };
+            InvalidateRect(Handle, ref rect, false);
         }
         internal void MoveSelection(int delta)
         {
@@ -233,10 +242,21 @@ namespace TabPilot
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
             if (e.Index < 0 || e.Index >= Items.Count || TitleFont == null || SmallFont == null) return;
+            Rectangle bounds = Rectangle.Intersect(ClientRectangle, e.Bounds);
+            if (bounds.Width <= 0 || bounds.Height <= 0) return;
+            using (var buffer = BufferedGraphicsManager.Current.Allocate(e.Graphics, bounds))
+            {
+                buffer.Graphics.ResetTransform();
+                var rowBounds = e.Bounds;
+                rowBounds.Offset(-bounds.X, -bounds.Y);
+                DrawRow(e, buffer.Graphics, rowBounds);
+                buffer.Render(e.Graphics);
+            }
+        }
+        void DrawRow(DrawItemEventArgs e, Graphics g, Rectangle b)
+        {
             var row = (ListEntry)Items[e.Index];
-            var g = e.Graphics;
             float s = UiScale;
-            var b = e.Bounds;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             using (var brush = new SolidBrush(Color.White)) g.FillRectangle(brush, b);
             if (row.Tab == null)
